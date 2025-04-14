@@ -102,13 +102,13 @@
 </head>
 <body>
 
-  <h1>🔡 Unicode 编码 / 解码 工具</h1>
+  <h1>🔡 Unicode 编码/解码 工具</h1>
 
-  <textarea id="inputText" placeholder="输入文字或 Unicode 16进制，例如：7f167801"></textarea>
+  <textarea id="inputText" placeholder="支持输入文字或 Unicode 编码，例如：5de55177"></textarea>
 
   <div class="buttons">
-    <button onclick="encode()">编码：转成Unicode</button>
-    <button onclick="decode()">解码：转成汉字</button>
+    <button onclick="encode()">编码：文字 ➜ Unicode</button>
+    <button onclick="decode()">解码：Unicode ➜ 文字</button>
     <button onclick="toggleDarkMode()">🌙 夜间模式</button>
   </div>
 
@@ -120,19 +120,26 @@
     function encode() {
       const input = document.getElementById("inputText").value;
       let result = '';
-
       for (let char of input) {
         const code = char.charCodeAt(0).toString(16).padStart(4, '0');
         result += code;
       }
-
       document.getElementById("output").innerText = `🔢 编码结果：\n${result}`;
     }
 
     function decode() {
-      const input = document.getElementById("inputText").value.replace(/\s+/g, '');
+      let input = document.getElementById("inputText").value;
+
+      // 将英文逗号 ',' 替换为中文逗号 '，' 的 Unicode 编码 ff0c
+      input = input.replace(/,/g, 'ff0c');
+
+      // 清洗输入格式
+      input = input
+        .replace(/\\u/gi, '')           // 去掉 \u
+        .replace(/[^0-9a-fA-F]/g, '');  // 保留十六进制字符
+
       if (input.length % 4 !== 0) {
-        document.getElementById("output").innerText = "⚠️ 输入长度不是4的倍数，可能不是有效的 Unicode 编码。";
+        document.getElementById("output").innerText = "⚠️ 输入长度不是4的倍数，可能仍有格式错误。";
         return;
       }
 
@@ -142,7 +149,7 @@
         try {
           result += String.fromCharCode(parseInt(hex, 16));
         } catch (e) {
-          result += '�';
+          result += '�'; // 替代非法字符
         }
       }
 
