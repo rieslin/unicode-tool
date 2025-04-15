@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unicode 编码/解码工具</title>
+  <title>D.I.R.T.Y编码/解码工具</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -102,14 +102,14 @@
 </head>
 <body>
 
-  <h1>🔡 Unicode 编码/解码 工具</h1>
+  <h1>🔡 D.I.R.T.Y 编码/解码 工具</h1>
 
-  <textarea id="inputText" placeholder="支持输入文字或 Unicode 编码，例如：5de55177"></textarea>
+  <textarea id="inputText" placeholder="inputText"></textarea>
 
   <div class="buttons">
-    <button onclick="encode()">编码：文字 ➜ Unicode</button>
-    <button onclick="decode()">解码：Unicode ➜ 文字</button>
-    <button onclick="toggleDarkMode()">🌙 夜间模式</button>
+    <button onclick="encode()">编码：文字 ➜ ENcode </button>
+    <button onclick="decode()">解码：DEcode ➜ 文字</button>
+    <button onclick="toggleDarkMode()">🌙 DARK </button>
   </div>
 
   <div id="output">🔍 结果将在这里显示</div>
@@ -130,7 +130,7 @@
     function decode() {
       let input = document.getElementById("inputText").value;
 
-      // 将英文逗号 ',' 替换为中文逗号 '，' 的 Unicode 编码 ff0c
+      // 将英文逗号 ',' 替换为中文逗号 '，' 的编码 ff0c
       input = input.replace(/,/g, 'ff0c');
 
       // 清洗输入格式
